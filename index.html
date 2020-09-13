@@ -1,0 +1,149 @@
+<html>
+
+<head>
+    <title> animation </title>
+    <style>
+        div[canvas] {
+            display: grid;
+            box-sizing: border-box;
+            padding-top: 100px;
+            width: 85%;
+        }
+
+        canvas {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex-flow: wrap;
+        }
+
+        .sidebar {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .head {
+            width: 100%;
+            text-align: left;
+        }
+
+        span {
+            text-align: right;
+        }
+
+        div[buttons],
+        div[inputs],
+        .head {
+            width: 45%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type=text],
+        button {
+            border-style: unset;
+            box-shadow: 1px 1px 3px black;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 70px;
+            height: 35px;
+            font-weight: bold;
+            background-color: deepskyblue;
+            color: #fff;
+            margin-right: 20px;
+        }
+
+        div[buttons] {
+            display: flex;
+            padding: 9px;
+        }
+
+        div[inputs] {
+            margin-left: 254px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div canvas>
+            <canvas width="900" height="800">
+
+            </canvas>
+        </div>
+        <div class="sidebar">
+            <div inputs>
+                <table>
+                    <tr>
+                        <th class="head">
+                            <span>
+                                position
+                            </span>
+                            <span>
+                                x
+                            </span>
+                        </th>
+                        <th class="">
+                            <span>
+                                y
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input placeholder="x" type="text" oninput="getXvalue(event)" />
+                        </th>
+                        <th>
+                            <input placeholder="y" type="text" oninput="getYvalue(event)" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="head">
+                            dimentions
+                            width
+                        </th>
+                        <th class="">
+                            height
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input placeholder="width" type="text" oninput="getWidthvalue(event)" />
+                        </th>
+                        <th>
+                            <input placeholder="height" type="text" oninput="getHeightvalue(event)" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="head">
+                            radius = speed
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="">
+                            <input type="text" placeholder="&pi;/R" oninput="getRadiusvalue(event)" />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="index.js"> </script>
+
+</html>

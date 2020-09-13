@@ -1,0 +1,51 @@
+{
+  "name": "animation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "start": "polymer serve",
+    "build": "npm run build:prpl-server && npm run build:static",
+    "build:prpl-server": "polymer build --auto-base-path && gulp prpl-server",
+    "build:static": "polymer build",
+    "serve:prpl-server": "prpl-server --root server/build",
+    "serve:static": "polymer serve --port 5000 build/es5-bundled",
+    "test": "rm -rf build/ && polymer lint && polymer test"
+  },
+  "dependencies": {
+    "@polymer/app-layout": "^3.1.0",
+    "@polymer/app-route": "^3.0.2",
+    "@polymer/app-storage": "^3.0.2",
+    "@polymer/iron-ajax": "^3.0.1",
+    "@polymer/iron-flex-layout": "^3.0.1",
+    "@polymer/iron-form": "^3.0.1",
+    "@polymer/iron-icon": "^3.0.1",
+    "@polymer/iron-icons": "^3.0.1",
+    "@polymer/iron-iconset-svg": "^3.0.1",
+    "@polymer/iron-media-query": "^3.0.1",
+    "@polymer/iron-overlay-behavior": "^3.0.3",
+    "@polymer/iron-pages": "^3.0.1",
+    "@polymer/iron-selector": "^3.0.1",
+    "@polymer/neon-animation": "^3.0.1",
+    "@polymer/paper-behaviors": "^3.0.1",
+    "@polymer/paper-button": "^3.0.1",
+    "@polymer/paper-checkbox": "^3.1.0",
+    "@polymer/paper-dropdown-menu": "^3.1.0",
+    "@polymer/paper-icon-button": "^3.0.2",
+    "@polymer/paper-input": "^3.1.0",
+    "@polymer/paper-item": "^3.0.1",
+    "@polymer/paper-listbox": "^3.0.1",
+    "@polymer/paper-spinner": "^3.0.2",
+    "@polymer/paper-tabs": "^3.1.0",
+    "@polymer/polymer": "^3.3.1",
+    "@webcomponents/webcomponentsjs": "^2.4.0",
+    "lit-html": "^1.1.2",
+    "superagent": "^3.5.2"
+  },
+  "devDependencies": {
+    "@polymer/iron-component-page": "^4.0.1"
+  }
+}
