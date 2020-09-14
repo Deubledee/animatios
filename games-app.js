@@ -1,29 +1,96 @@
-import { figure } from "./figures.js"
-import { html as litHtml, render } from `lit-html//lit-html`
-import { PolymerElement, html } from '@polymer/polymer';
 
+import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+//import { html as litHtml, render } from 'lit-html//lit-html'
+import { html, PolymerElement } from '@polymer/polymer';
+import { Animate } from "./animate.js"
 
-const canvas = document.querySelector("canvas")
-const inputX = document.querySelector("input[placeholder=x]")
-const inputY = document.querySelector("input[placeholder=y")
-const inputWidth = document.querySelector("input[placeholder=width]")
-const inputHeight = document.querySelector("input[placeholder=height")
-const ctx = canvas.getContext("2d")
-ctx.fillStyle = "#000000"
-ctx.fillRect(0, 0, canvas.width, canvas.height)
-/*
-inputX.setAttribute("value", figure.x)
-inputY.setAttribute("value", figure.y)
-inputWidth.setAttribute("value", figure.width)
-inputHeight.setAttribute("value", figure.height)
-inputX.setAttribute("placeholder", figure.x)
-inputY.setAttribute("placeholder", figure.y)
-inputWidth.setAttribute("placeholder", figure.width)
-inputHeight.setAttribute("placeholder", figure.height)*/
-class games extends PolymerElement {
-    static get properties() { return { mood: String } }
+class gamesApp extends mixinBehaviors([Animate], PolymerElement) {
     static get template() {
-        return html`<div buttons>
+        return html`    
+    <style>
+        div[canvas] {
+            display: grid;
+            box-sizing: border-box;
+            padding-top: 100px;
+            width: 85%;
+        }
+
+        canvas {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex-flow: wrap;
+        }
+
+        .sidebar {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .head {
+            width: 100%;
+            text-align: left;
+        }
+
+        span {
+            text-align: right;
+        }
+
+        div[buttons],
+        div[inputs],
+        .head {
+            width: 45%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        input[type=text],
+        button {
+            border-style: unset;
+            box-shadow: 1px 1px 3px black;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 70px;
+            height: 35px;
+            font-weight: bold;
+            background-color: deepskyblue;
+            color: #fff;
+            margin-right: 20px;
+        }
+
+        div[buttons] {
+            display: flex;
+            padding: 9px;
+        }
+
+        div[inputs] {
+            margin-left: 254px;
+        }
+    </style>
+    <app-location route="{{route}}"> 
+    </app-location>
+    <app-route route="{{route}}" pattern="/:page" data="{{routeData}}" tail="{{subroute}}" active="{{active}}" query-params="{{query}}">
+    </app-route>  
+    <div class="container">
+         <div canvas>
+            <canvas width="900" height="800">
+            </canvas>
+        </div>
+        <div buttons>
                 <button  on-click="start">
                     start
                 </button>
@@ -47,40 +114,96 @@ class games extends PolymerElement {
                     <label for="togglecstroke">stroke</label>
                 </div>               
             </div>
-        </div>`;
+        </div>
+        <div class="sidebar">
+            <div inputs>
+                <table>
+                    <tr>
+                        <th class="head">
+                            <span>
+                                position
+                            </span>
+                            <span>
+                                x
+                            </span>
+                        </th>
+                        <th class="">
+                            <span>
+                                y
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input placeholder="x" type="text" oninput="getXvalue(event)" />
+                        </th>
+                        <th>
+                            <input placeholder="y" type="text" oninput="getYvalue(event)" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="head">
+                            dimentions
+                            width
+                        </th>
+                        <th class="">
+                            height
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input placeholder="width" type="text" oninput="getWidthvalue(event)" />
+                        </th>
+                        <th>
+                            <input placeholder="height" type="text" oninput="getHeightvalue(event)" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="head">
+                            radius = speed
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="">
+                            <input type="text" placeholder="&pi;/R" oninput="getRadiusvalue(event)" />
+                        </th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>`;
     }
+    static get is() { return 'games-app'; }
     static get properties() {
         return {
-            Animation: new Animate()
-        }
-    }
-    ready() {
-
-    }
-    bouncy() {
-        var fig = new figure(canvas.getContext('2d'), this.Animation.Balls.length)
-        // if (!Animation.restart)
-        this.Animation.Balls.push(fig)
-
-        if (!!this.Animation.stopAnimation) {
-            this.Animation.stopAnimation = false
-            this.Animation.restart = false
-            this.Animation.startBouncy()
-            if (this.Animation.Balls.length > 1) {
-                this.Animation.Balls.forEach(ball => ball.start())
+            Animation: {
+                type: Object,
+                //   value: new Animate()
+            },
+            canvas: {
+                type: Object
             }
         }
     }
+    ready() {
+        super.ready();
+        this.setCanvas()
+    }
+    setCanvas() {
+        this.canvas = this.shadowRoot.querySelector('canvas')
+        this.ctx = temp1.canvas.getContext('2d')
+        this.ctx.fillRect(0, 0, temp1.canvas.width, temp1.canvas.height)
+        console.log(this)
+    }
 
     toggleBounce() {
-        window.current = Math.sin(Math.PI * angle / 180)
-
+        this.current = "bouncy" //angle Math.sin(Math.PI * angle / 180)
     }
 
     start() {
         const types = { bouncy: bouncy }
-        if (window.current in types)
-            types[window.current].call(types[current], true)
+        if (this.current in types)
+            types[this.current].call(types[current], true)
         //startThisAnimation(window.current)
     }
 
@@ -101,74 +224,9 @@ class games extends PolymerElement {
     }
 }
 
-customElements.define('my-element', games);
+customElements.define(gamesApp.is, gamesApp);
 
 /////////////\\\\\\\\\\\\
-
-function Vector2D(x, y) {
-    this.x = x;
-    this.y = y;
-}
-
-// PUBLIC METHODS	
-Vector2D.prototype = {
-    lengthSquared: function () {
-        return this.x * this.x + this.y * this.y;
-    },
-    length: function () {
-        return Math.sqrt(this.lengthSquared());
-    },
-    clone: function () {
-        return new Vector2D(this.x, this.y);
-    },
-    negate: function () {
-        this.x = -this.x;
-        this.y = -this.y;
-    },
-    normalize: function () {
-        var length = this.length();
-        if (length > 0) {
-            this.x /= length;
-            this.y /= length;
-        }
-        return this.length();
-    },
-    add: function (vec) {
-        return new Vector2D(this.x + vec.x, this.y + vec.y);
-    },
-    incrementBy: function (vec) {
-        this.x += vec.x;
-        this.y += vec.y;
-    },
-    subtract: function (vec) {
-        return new Vector2D(this.x - vec.x, this.y - vec.y);
-    },
-    decrementBy: function (vec) {
-        this.x -= vec.x;
-        this.y -= vec.y;
-    },
-    multiply: function (k) {
-        return new Vector2D(k * this.x, k * this.y);
-    },
-    addScaled: function (vec, k) {
-        return new Vector2D(this.x + k * vec.x, this.y + k * vec.y);
-    },
-    scaleBy: function (k) {
-        this.x *= k;
-        this.y *= k;
-    },
-    dotProduct: function (vec) {
-        return this.x * vec.x + this.y * vec.y;
-    }
-};
-
-// STATIC METHODS
-Vector2D.distance = function (vec1, vec2) {
-    return (vec1.subtract(vec2)).length();
-}
-Vector2D.angleBetween = function (vec1, vec2) {
-    return Math.acos(vec1.dotProduct(vec2) / (vec1.length() * vec2.length()));
-}
 
 function* getValues(fig) {
     if (!!fig) {

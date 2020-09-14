@@ -1,4 +1,5 @@
-export class figure {
+import { Vector2D } from "./vector2D.js/"
+export class ballRefraction {
     constructor(ctx, fig) {
         this.ctx = ctx
         this.figure = fig
